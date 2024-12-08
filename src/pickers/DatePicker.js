@@ -5,8 +5,10 @@ import moment from "moment";
 import { injectIntl } from "react-intl";
 
 import { withTheme, withStyles } from "@material-ui/core/styles";
+import CalendarToday from '@material-ui/icons/CalendarToday';
 import { FormControl } from "@material-ui/core";
 import { DatePicker as MUIDatePicker } from "@material-ui/pickers";
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { formatMessage, toISODate } from "../helpers/i18n";
 import { withModulesManager, withHistory } from "@openimis/fe-core";
 import { DEFAULT } from "../constants";
@@ -135,7 +137,7 @@ class openIMISDatePicker extends Component {
       const secondCalendarLocale = modulesManager.getConf("fe-core", "secondCalendarLocale", "nepali_en");
 
       return (
-        <FormControl fullWidth={fullWidth}>
+        <FormControl fullWidth={fullWidth} >
           <label className={classes.label}>
             {!!label ? formatMessage(intl, module, label).concat(required ? " *" : "") : null}
           </label>
@@ -149,10 +151,18 @@ class openIMISDatePicker extends Component {
             highlightToday={false}
             calendar={this.getDictionaryValueOrDefault(this.secondaryCalendarsOptions, secondCalendarType)}
             locale={this.getDictionaryValueOrDefault(this.secondaryCalendarsLocaleOptions, secondCalendarLocale)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <CalendarToday />
+                </InputAdornment>
+              ),
+            }}
           >
             <button style={{ margin: "5px" }} onClick={(e) => this.clearDate(e)}>
               {formatMessage(intl, "core", "calendar.clearButton")}
             </button>
+            
           </DatePicker>
         </FormControl>
       );
@@ -177,6 +187,13 @@ class openIMISDatePicker extends Component {
             label={!!label ? formatMessage(intl, module, label) : null}
             onChange={this.dateChange}
             disablePast={disablePast}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <CalendarToday />
+                </InputAdornment>
+              ),
+            }}
           />
         </FormControl>
       );
