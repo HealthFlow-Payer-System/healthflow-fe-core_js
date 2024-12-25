@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "../helpers/history";
 import { makeStyles } from "@material-ui/styles";
-import { Button, Box, Grid, Paper, LinearProgress, Divider, Link, Typography } from "@material-ui/core";
+//import { Button, Box, Grid, Paper, LinearProgress, Divider, Link, Typography } from "@material-ui/core";
+import { Button, Box, Grid, Paper, LinearProgress, Divider, Link, Typography } from "@mui/material";
 import TextInput from "../components/inputs/TextInput";
 import { useTranslations } from "../helpers/i18n";
 import { useModulesManager } from "../helpers/modules";

@@ -1,42 +1,9 @@
 import React, { Component } from "react";
-import clsx from "clsx";
-import { withTheme, withStyles } from "@material-ui/core/styles";
 import { injectIntl } from "react-intl";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material"
 import { formatMessage } from "../../helpers/i18n";
 import { DEFAULT } from "../../constants";
 import withModulesManager from "../../helpers/modules";
-
-const styles = (theme) => ({
-  label: {
-    color: theme.palette.primary.main,
-  },
-  // NOTE: This is used to hide the increment/decrement arrows from the number input
-  numberInput: {
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-    },
-    "& input[type=number]::-webkit-outer-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none",
-      margin: 0,
-    },
-  },
-  disabledStateVisibilityBoost: {
-    "& .Mui-disabled": {
-      color: '#5E5B50',
-    },
-    "& .MuiInput-underline:before": {
-      borderBottom: `1px dotted #5E5B50`,
-    },
-    "& .MuiFormLabel-root.Mui-disabled": {
-      color: "#181716",
-    }
-  },
-});
 
 class TextInput extends Component {
   constructor(props) {
@@ -99,16 +66,38 @@ class TextInput extends Component {
     return (
       <TextField
         {...others}
-        className={clsx({
-          [classes.numberInput]: true,
-          [classes.disabledStateVisibilityBoost]: this.disabledVisibilityBoost && readOnly,
+        sx={(theme) => ({
+          label: {
+            color: theme.palette.primary.main,
+          },
+          // Apply base styles
+          "& input[type=number]": {
+            "-moz-appearance": "textfield",
+          },
+          "& input[type=number]::-webkit-outer-spin-button": {
+            "-webkit-appearance": "none",
+            margin: 0,
+          },
+          "& input[type=number]::-webkit-inner-spin-button": {
+            "-webkit-appearance": "none",
+            margin: 0,
+          },
+          // Conditional styles for disabled visibility boost when readOnly
+          ...(this.disabledVisibilityBoost && readOnly && {
+            "& .Mui-disabled": {
+              color: '#5E5B50',
+            },
+            "& .MuiInput-underline:before": {
+              borderBottom: `1px dotted #5E5B50`,
+            },
+            "& .MuiFormLabel-root.Mui-disabled": {
+              color: "#181716",
+            },
+          }),
         })}
         fullWidth
         disabled={readOnly}
         label={!!label && formatMessage(intl, module, label)}
-        InputLabelProps={{
-          className: classes.label,
-        }}
         InputProps={{ inputProps, startAdornment, endAdornment }}
         onChange={this._onChange}
         value={this.state.value}
@@ -120,4 +109,4 @@ class TextInput extends Component {
   }
 }
 
-export default withModulesManager(injectIntl(withTheme(withStyles(styles)(TextInput))));
+export default withModulesManager(injectIntl(TextInput));
