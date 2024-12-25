@@ -1,33 +1,20 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import _ from "lodash-uuid";
+import { MenuItem, TextField, FormControl } from "@mui/material"
 
-import { FormControl, InputLabel, Select, MenuItem, IconButton } from "@material-ui/core";
-import { withTheme, withStyles } from "@material-ui/core/styles";
-
-import ClearIcon from "@material-ui/icons/Clear";
 import FormattedMessage from "../generics/FormattedMessage";
 import TextInput from "./TextInput";
 
-const styles = (theme) => ({
-  label: {
-    color: theme.palette.primary.main,
-  },
-  formControl: {
-    position: "relative",
-  },
-  iconButton: {
-    position: "absolute",
-    right: 0,
-    padding: "8px",
-  },
-});
-
-function EmptyComponent() {
-  return <div />;
-}
 
 class SelectInput extends Component {
+  constructor(props) {
+    super(props);
+    // Generate the UUIDs once per component instance
+    this.labelId = `${_.uuid()}-label`;
+    this.selectId = `${_.uuid()}-input`;
+  }
+
   _onChange = (e) => {
     if (this.props.value !== e.target.value) {
       this.props.onChange(JSON.parse(e.target.value));
@@ -36,23 +23,6 @@ class SelectInput extends Component {
 
   handleClear = () => {
     this.props.onChange("");
-  };
-
-  // When there is a value, we pass a dummy div to effectively hide the default dropdown icon.
-  // This allows us to make room for the clear icon without having two icons visible at the same time.
-  renderIconComponent = () => {
-    const { value } = this.props;
-    return value ? EmptyComponent : undefined;
-  };
-
-  // If there's a value, we render the clear icon. Clicking it calls handleClear, which resets the Select's value.
-  renderEndAdornment = () => {
-    const { value, classes } = this.props;
-    return value ? (
-      <IconButton onClick={this.handleClear} className={classes.iconButton}>
-        <ClearIcon />
-      </IconButton>
-    ) : undefined;
   };
 
   render() {
@@ -78,26 +48,27 @@ class SelectInput extends Component {
     return (
       <Fragment>
         {!readOnly && (
-          <FormControl required={required} fullWidth className={classes.formControl}>
-            <InputLabel shrink={true} className={classes.label}>
-              {strLabel ?? <FormattedMessage module={module} id={label} />}
-            </InputLabel>
-            <Select
-              readOnly={readOnly}
-              inputProps={{
-                name: name,
-                id: `${_.uuid()}-input`,
-              }}
-              value={!!value ? JSON.stringify(value) : null}
-              onChange={this._onChange}
-              IconComponent={this.renderIconComponent()}
-              disabled={disabled}
-              endAdornment={this.renderEndAdornment()}
-              displayEmpty
-              //NOTE: We want to get rid of default styling (marginTop) if label is not rendered
-              {...(withLabel ? null : { style: { marginTop: "0px" } })}
-            >
-              {placeholder && (
+          <FormControl fullWidth  sx = {(theme) => ({
+            label: {
+              color: theme.palette.primary.main,
+            }
+          })}>
+          <TextField 
+          required={required}
+          fullWidth
+          readOnly={readOnly}
+          value={!!value ? JSON.stringify(value) : ""}
+          label = {strLabel ?? <FormattedMessage module={module} id={label} />}
+          select
+          inputProps={{
+            name: name,
+            id: this.selectId,
+          }}
+          onChange={this._onChange}
+          disabled={disabled}
+          displayEmpty
+          >
+           {placeholder && (
                 <MenuItem disabled value="">
                   <FormattedMessage module={module} id={placeholder} />
                 </MenuItem>
@@ -107,13 +78,13 @@ class SelectInput extends Component {
                   {option.label}
                 </MenuItem>
               ))}
-            </Select>
+          </TextField>
           </FormControl>
         )}
         {!!readOnly && (
           <TextInput
-            //NOTE: We want to get rid of default styling (marginTop) if label is not rendered
-            {...(withLabel ? { label } : null)}
+            /* //NOTE: We want to get rid of default styling (marginTop) if label is not rendered
+            {...(withLabel ? { label } : null)} */
             fullWidth={true}
             module={module}
             value={valueStr}
@@ -125,4 +96,4 @@ class SelectInput extends Component {
   }
 }
 
-export default injectIntl(withTheme(withStyles(styles)(SelectInput)));
+export default injectIntl(SelectInput);
