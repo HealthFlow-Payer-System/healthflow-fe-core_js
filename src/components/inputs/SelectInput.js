@@ -7,7 +7,7 @@ import FormattedMessage from "../generics/FormattedMessage";
 import TextInput from "./TextInput";
 
 /*
-Deleted clear-icon as there is no need in material UI to provide a clear-icon in a select component 
+Deleted clear-icon as there is no need in material UI to provide a clear-icon in a select component. 
 */
 class SelectInput extends Component {
   constructor(props) {
