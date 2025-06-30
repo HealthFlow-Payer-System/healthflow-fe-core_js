@@ -7,15 +7,13 @@ const RefreshAuthToken = () => {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      intervalRef.current = setInterval(auth.refresh, 2 * 60 * 1000); // Refresh the token every 2 minutes
+      intervalRef.current = setInterval(auth.refresh, 2 * 60 * 1000);
     }
-
     return () => {
-      clearTimeout(intervalRef.current);
+      clearInterval(intervalRef.current); // Fix: Use clearInterval
     };
   }, [auth.isAuthenticated]);
 
   return null;
 };
-
 export default RefreshAuthToken;

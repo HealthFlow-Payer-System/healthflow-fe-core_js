@@ -7,6 +7,16 @@ export default {
   input: "src/index.js",
   output: [
     {
+      file: 'dist/index.es.js',
+      format: 'esm',
+      exports: 'named',
+    },
+    {
+      file: 'dist/index.js',
+      format: 'cjs',
+      exports: 'named',
+    },
+    {
       file: pkg.module,
       format: "es",
       sourcemap: true,
@@ -34,6 +44,7 @@ export default {
     "prop-types",
     /^react.*/,
     /^redux.*/,
+    '@openimis/fe-core',
   ],
   plugins: [
     json(),

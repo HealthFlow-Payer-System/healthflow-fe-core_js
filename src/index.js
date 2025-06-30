@@ -1,7 +1,6 @@
 import App from "./components/App";
 import React from "react";
 import messages_en from "./translations/en.json";
-import KeepLegacyAlive from "./components/KeepLegacyAlive";
 import AutoSuggestion from "./components/inputs/AutoSuggestion";
 import Autocomplete from "./components/inputs/Autocomplete";
 import Contributions from "./components/generics/Contributions";
@@ -183,14 +182,13 @@ const DEFAULT_CONFIG = {
   "middlewares": [authMiddleware],
   "refs": [
     { key: "core.JournalDrawer.pollInterval", ref: 2000 },
-    { key: "core.KeepLegacyAlive.pollInterval", ref: 300000 },
     { key: "core.YearPicker", ref: YearPicker },
     { key: "core.MonthPicker", ref: MonthPicker },
     { key: "core.LanguagePicker", ref: LanguagePicker },
     { key: "core.AuthorityPicker", ref: AuthorityPicker },
     { key: "core.route.role", ref: ROUTE_ROLE },
   ],
-  "core.Boot": [KeepLegacyAlive, RefreshAuthToken],
+  "core.Boot": [RefreshAuthToken],
   "core.Router": [
     { path: ROUTE_ROLES, component: Roles },
     { path: ROUTE_ROLE + "/:role_uuid?", component: Role },
