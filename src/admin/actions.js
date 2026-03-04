@@ -224,6 +224,7 @@ export function fetchUser(mm, userId, clientMutationId) {
               languageId
               lastName
               otherNames
+              defaultRowsPerPage
               roles { id name isSystem}
               healthFacility ${mm.getProjection("location.HealthFacilityPicker.projection")}
               email
