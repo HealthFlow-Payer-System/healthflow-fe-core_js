@@ -1,4 +1,4 @@
-import { baseApiUrl } from "@openimis/fe-core";
+import { baseApiUrl } from "../actions";
 import { EXPORT_FILE_FORMATS } from "../constants";
 import { openBlob } from "./api";
 

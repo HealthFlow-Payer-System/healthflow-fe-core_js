@@ -1,0 +1,133 @@
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import GetIconComponent from "../../helpers/icons";
+
+import { Box, CircularProgress, InputAdornment } from "@mui/material";
+const CheckOutlinedIcon = GetIconComponent("Check")
+import clsx from "clsx";
+import { debounce } from "lodash";
+const ErrorOutlineOutlinedIcon = GetIconComponent("Error")
+
+import TextAreaInput from "./TextAreaInput";
+import { useModulesManager } from "../../helpers/modules";
+import { useTranslations } from "../../helpers/i18n";
+import { ValidIcon, InvalidIcon } from "../../styles";
+import { DEFAULT_DEBOUNCE_TIME } from "../../constants";
+
+const ValidatedTextAreaInput = ({
+  action,
+  additionalQueryArgs,
+  autoFocus,
+  className,
+  clearAction,
+  codeTakenLabel,
+  inputProps,
+  isValid,
+  isValidating,
+  itemQueryIdentifier,
+  label,
+  module,
+  onChange,
+  placeholder,
+  readOnly,
+  required,
+  setValidAction,
+  shouldValidate,
+  type,
+  validationError,
+  value,
+  invalidValueFormatLabel,
+  invalidValueFormat,
+}) => {
+  const modulesManager = useModulesManager();
+
+  const dispatch = useDispatch();
+  const { formatMessage } = useTranslations(module, modulesManager);
+  const shouldBeValidated = shouldValidate(value);
+  const queryVariables = {};
+  const checkValidity = (queryVariables) => dispatch(action(modulesManager, queryVariables));
+  const checkError = () => {
+    if (validationError || (!isValidating && !isValid && value)) {
+      return formatMessage(codeTakenLabel);
+    }
+    if (invalidValueFormat) {
+      return formatMessage(invalidValueFormatLabel);
+    }
+    return null;
+  };
+  const error = checkError();
+
+  useEffect(() => {
+    if (shouldBeValidated) {
+      queryVariables[itemQueryIdentifier] = value;
+      if (additionalQueryArgs) Object.entries(additionalQueryArgs).map((arg) => (queryVariables[arg?.[0]] = arg?.[1]));
+      if (value) checkValidity(queryVariables);
+      return () => (!value || isValid) && dispatch(clearAction());
+    } else {
+      !!setValidAction && dispatch(setValidAction());
+      return () => (!value || isValid) && dispatch(clearAction());
+    }
+  }, [value]);
+
+  return (
+    <>
+      {shouldBeValidated ? (
+        <TextAreaInput
+          module={module}
+          autoFocus={autoFocus}
+          className={className}
+          readOnly={readOnly}
+          required={required}
+          label={label}
+          placeholder={placeholder}
+          type={type}
+          error={error}
+          value={value}
+          inputProps={inputProps}
+          endAdornment={
+            <InputAdornment position="end" component={!error ? ValidIcon : InvalidIcon}>
+              <>
+                {isValidating && value && (
+                  <Box mr={1}>
+                    <CircularProgress size={20} />
+                  </Box>
+                )}
+                {value && !error && <CheckOutlinedIcon size={20} />}
+                {value && error && <ErrorOutlineOutlinedIcon size={20} />}
+              </>
+            </InputAdornment>
+          }
+          onChange={debounce(onChange, DEFAULT_DEBOUNCE_TIME)}
+        />
+      ) : (
+        <TextAreaInput
+          module={module}
+          label={label}
+          autoFocus={autoFocus}
+          value={value}
+          readOnly={readOnly}
+          error={error}
+          required={required}
+          type={type}
+          onChange={debounce(onChange, DEFAULT_DEBOUNCE_TIME)}
+          inputProps={inputProps}
+          endAdornment={
+            <InputAdornment position="end" component={!error ? ValidIcon : InvalidIcon}>
+              <>
+                {isValidating && value && (
+                  <Box mr={1}>
+                    <CircularProgress size={20} />
+                  </Box>
+                )}
+                {value && !error && <CheckOutlinedIcon size={20} />}
+                {value && error && <ErrorOutlineOutlinedIcon size={20} />}
+              </>
+            </InputAdornment>
+          }
+        />
+      )}
+    </>
+  );
+};
+
+export default ValidatedTextAreaInput;

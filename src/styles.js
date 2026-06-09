@@ -1,10 +1,9 @@
-import { makeStyles } from "@material-ui/styles";
+import { styled } from "@mui/material/styles";
 
-export const useStyles = makeStyles((theme) => ({
-    validIcon: {
-      color: "green",
-    },
-    invalidIcon: {
-      color: theme.palette.error.main,
-    },
-  }));
+export const ValidIcon = styled('div')(({ theme }) => ({
+  color: "green",
+}));
+
+export const InvalidIcon = styled('div')(({ theme }) => ({
+  color: theme.palette.error.main,
+}));

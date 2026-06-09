@@ -52,6 +52,7 @@ function reducer(
     fetchedLanguages: false,
     languages: [],
     errorLanguages: null,
+    impersonatedUser: null,
   },
   action,
 ) {
@@ -429,6 +430,7 @@ function reducer(
         modulePermissions: [],
         role: null,
         roleRights: [],
+        impersonatedUser: null,
       };
     case "CORE_PAGINATION_PAGE":
       return {
@@ -454,6 +456,16 @@ function reducer(
       return {
         ...state,
         isSecondaryCalendarEnabled: action.payload.isSecondaryCalendarEnabled,
+      };
+    case "CORE_IMPERSONATE_USER":
+      return {
+        ...state,
+        impersonatedUser: action.payload,
+      };
+    case "CORE_STOP_IMPERSONATION":
+      return {
+        ...state,
+        impersonatedUser: null,
       };
     default:
       return state;

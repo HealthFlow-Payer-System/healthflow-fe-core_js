@@ -1,3 +1,3 @@
-import _Helmet from "react-helmet";
+import Helmet from "react-helmet";
 
-export default _Helmet;
+export default Helmet;
