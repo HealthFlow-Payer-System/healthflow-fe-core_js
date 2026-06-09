@@ -128,17 +128,18 @@ export function dispatchMutationReq(state, action) {
   return {
     ...state,
     submittingMutation: true,
-    mutation: action.meta,
+    mutation: { ...action.meta },
   };
 }
 
 export function dispatchMutationResp(state, service, action) {
-  var mutation = state.mutation;
-  mutation.id = action.payload.data[service].internalId;
   return {
     ...state,
     submittingMutation: false,
-    mutation,
+    mutation: {
+      ...state.mutation,
+      id: action.payload?.data?.[service]?.internalId,
+    },
   };
 }
 

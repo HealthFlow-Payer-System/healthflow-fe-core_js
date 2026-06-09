@@ -271,10 +271,10 @@ class Table extends Component {
                               })}
                           </tr>
                         </table>
-                        {localItemFormatters[0](i, iidx).props.children.props.value != undefined &&
+                        {localItemFormatters[0](i, iidx).props.children.props.children.props.value != undefined &&
                           (
-                            localItemFormatters[0](i, iidx).props.children.props.value.packagetype != undefined &&
-                            localItemFormatters[0](i, iidx).props.children.props.value.packagetype !== "S" && (
+                            localItemFormatters[0](i, iidx).props.children.props.children.props.value.packagetype != undefined &&
+                            localItemFormatters[0](i, iidx).props.children.props.children.props.value.packagetype !== "S" && (
 
                               <table style={{ marginTop: 10, width: "90%" }}>
                                 <tr>
@@ -333,10 +333,10 @@ class Table extends Component {
                               })}
                           </tr>
                         </table>
-                        {localItemFormatters[0](i, iidx).props.children.props.value != undefined &&
+                        {localItemFormatters[0](i, iidx).props.children.props.children.props.value != undefined &&
                           (
-                            localItemFormatters[0](i, iidx).props.children.props.value.packagetype != undefined &&
-                            localItemFormatters[0](i, iidx).props.children.props.value.packagetype !== "S" && (
+                            localItemFormatters[0](i, iidx).props.children.props.children.props.value.packagetype != undefined &&
+                            localItemFormatters[0](i, iidx).props.children.props.children.props.value.packagetype !== "S" && (
 
                               <table style={{ marginTop: 10, width: "90%" }}>
                                 <tr>

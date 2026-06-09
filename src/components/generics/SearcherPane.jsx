@@ -107,6 +107,7 @@ class SearcherPane extends Component {
       appliedFiltersRowStructure = null,
       setAppliedFiltersRowStructure = null,
       applyNumberCircle = null,
+      ActionButton = SearcherActionButton,
     } = this.props;
     return (
       <StyledSearcherPane>
@@ -139,7 +140,7 @@ class SearcherPane extends Component {
                     )}
                     {!!actions &&
                       actions.map((a, idx) => (
-                        <SearcherActionButton
+                        <ActionButton
                           key={`action-${idx}`}
                           onClick={a.action}
                           startIcon={a.icon}
@@ -147,7 +148,7 @@ class SearcherPane extends Component {
                         />
                       ))}
                     {!!reset && (
-                      <SearcherActionButton
+                      <ActionButton
                         key="action-reset"
                         startIcon={<ResetFilterIcon />}
                         onClick={this.debouncedReset}
@@ -155,7 +156,7 @@ class SearcherPane extends Component {
                       />
                     )}
                     {!!refresh && (
-                      <SearcherActionButton
+                      <ActionButton
                         key="action-refresh"
                         startIcon={<DefaultSearchIcon />}
                         onClick={this.debouncedRefresh}

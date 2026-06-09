@@ -4,14 +4,13 @@ import TextInput from "./TextInput";
 import { injectIntl } from "react-intl";
 import { formatMessage, formatMessageWithValues } from "../../helpers/i18n";
 import withModulesManager from "../../helpers/modules";
+import { getDecimalPlaces } from "../../helpers/utils";
 
 const StyledFormattedNumberInput = styled("div")(({ theme }) => ({}));
 
 class FormattedNumberInput extends Component {
   constructor(props) {
     super(props);
-
-    this.pricesAreDecimal = props.modulesManager.getConf("fe-core", "pricesAreDecimal", true);
 
     this.state = {
       isEdited: false,
@@ -120,10 +119,9 @@ class FormattedNumberInput extends Component {
       error,
       thousandSeparator,
       numberOfDecimals,
-      pricesAreDecimal,
       displayZero = false,
       displayNa = false,
-      allowDecimals = this.pricesAreDecimal,
+      allowDecimals = true,
       ...others
     } = this.props;
 
