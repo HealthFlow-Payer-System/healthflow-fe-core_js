@@ -10,6 +10,7 @@ const SearchIcon = GetIconComponent("Search")
 import withModulesManager from "../../helpers/modules";
 import { injectIntl } from "react-intl";
 import _ from "lodash";
+import { DEFAULT } from "../../constants";
 
 const StyledAutoSuggestion = styled("div")(({ theme }) => ({
   "& .paper": {
@@ -71,6 +72,11 @@ class AutoSuggestion extends Component {
   constructor(props) {
     super(props);
     this.limitDisplay = props.modulesManager.getConf("fe-core", "AutoSuggestion.limitDisplay", 10);
+    this.inputVariant = props.modulesManager.getConf(
+      "fe-core",
+      "Input.variant",
+      DEFAULT.INPUT_VARIANT,
+    );
   }
 
   state = INIT_STATE;
@@ -183,9 +189,10 @@ class AutoSuggestion extends Component {
   renderInputComponent = ({ inputRef, ...inputProps }) => {
     const { label } = this.props;
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth variant={this.inputVariant}>
         <TextField
           {...inputProps}
+          variant={this.inputVariant}
           label={label}
           InputLabelProps={{
             ...inputProps.InputLabelProps,
@@ -322,7 +329,7 @@ class AutoSuggestion extends Component {
     if (readOnly) {
       return (
         <StyledAutoSuggestion>
-          <TextField label={label} className="textField" disabled value={value || ""} title={title} />
+          <TextField variant={this.inputVariant} label={label} className="textField" disabled value={value || ""} title={title} />
         </StyledAutoSuggestion>
       );
     }

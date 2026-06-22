@@ -52,6 +52,11 @@ class openIMISDatePicker extends Component {
       "Input.disabledVisibilityBoost",
       DEFAULT.DISABLED_VISIBILITY_BOOST,
     );
+    this.inputVariant = props.modulesManager.getConf(
+        "fe-core",
+        "Input.variant",
+        DEFAULT.INPUT_VARIANT,
+      );
   }
 
   state = {
@@ -138,6 +143,7 @@ class openIMISDatePicker extends Component {
       modulesManager,
       minDate,
       maxDate,
+      inputVariant,
       ...otherProps
     } = this.props;
 
@@ -173,7 +179,6 @@ class openIMISDatePicker extends Component {
     } else {
       return (
         <StyledDatePicker>
-          <FormControl fullWidth={fullWidth}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MUIDatePicker
               {...otherProps}
@@ -191,9 +196,9 @@ class openIMISDatePicker extends Component {
               label={!!label ? formatMessage(intl, module, label).concat(required ? " *" : "") : null}
               onChange={this.dateChange}
               disablePast={disablePast}
+              variant={inputVariant}
               />
             </LocalizationProvider>
-          </FormControl>
         </StyledDatePicker>
       );
     }

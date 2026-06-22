@@ -46,6 +46,11 @@ class TextInput extends Component {
       "Input.disabledVisibilityBoost",
       DEFAULT.DISABLED_VISIBILITY_BOOST,
     );
+    this.inputVariant = props.modulesManager.getConf(
+      "fe-core",
+      "Input.variant",
+      DEFAULT.INPUT_VARIANT,
+    );
   }
 
   state = {
@@ -99,6 +104,7 @@ class TextInput extends Component {
     return (
       <StyledTextInput>
         <TextField
+          variant={this.inputVariant}
           {...others}
           className={clsx({
             "numberInput": true,

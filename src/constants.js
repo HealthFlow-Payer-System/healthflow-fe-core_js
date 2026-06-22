@@ -133,6 +133,7 @@ export const DEFAULT = {
   ENABLE_PUBLIC_PAGE: false,
   SHOW_JOURNAL_SIDEBAR: true,
   DISABLED_VISIBILITY_BOOST: false,
+  INPUT_VARIANT: "standard",
 }
 
 export const EXPORT_FILE_FORMATS = {
