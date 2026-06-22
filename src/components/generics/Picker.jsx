@@ -23,9 +23,6 @@ import Table from "./Table";
 import FakeInput from "../inputs/FakeInput";
 
 const StyledPicker = styled('div')(({ theme }) => ({
-  '& .label': {
-    color: theme.palette.primary.main,
-  },
   '& .dialogTitle': theme?.dialog?.title ?? {},
   '& .dialogContent': theme?.dialog?.content ?? {},
 }));
@@ -149,9 +146,6 @@ class Picker extends Component {
           label={!!label && formatMessage(intl, module, label)}
           onClick={(e) => this.setState({ open: true })}
           value={suggestionFormatter(value)}
-          InputLabelProps={{
-            className: "label",
-          }}
           InputProps={{
             startAdornment: !readOnly && (
               <InputAdornment position="start">

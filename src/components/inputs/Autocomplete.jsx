@@ -8,9 +8,6 @@ import { useModulesManager } from "../../helpers/modules";
 import { DEFAULT } from "../../constants";
 
 const StyledAutocomplete = styled('div')(({ theme }) => ({
-  '& .label': {
-    color: theme.palette.primary.main,
-  },
   '& .MuiAutocomplete-root': {
     minWidth: '150px',
     width: "100%",
@@ -123,7 +120,7 @@ const Autocomplete = (props) => {
                   {...inputProps}
                   variant={inputVariant}
                   required={required}
-                  InputLabelProps={{ shrink: value !== undefined, className: "label" }}
+                  InputLabelProps={{ shrink: value !== undefined }}
                   label={withLabel && (label || formatMessage("label"))}
                   placeholder={!readOnly && withPlaceholder ? (placeholder || formatMessage("placeholder")) : undefined}
                 />

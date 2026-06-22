@@ -23,18 +23,22 @@ import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 
 const StyledDatePicker = styled('div')(({ theme }) => ({
-  '& .label': {
-    color: theme.palette.primary.main,
+  // Ensure custom (non-MUI) date pickers (e.g. secondary calendar) inherit theme colors
+  '& label': {
+    color: theme.palette.text.secondary,
+  },
+  '& input': {
+    color: theme.palette.text.primary,
   },
   '& .disabledStateVisibilityBoost': {
     "& .MuiFormLabel-root.Mui-disabled": {
-      color: "#181716",
+      color: theme.palette.text.secondary,
     },
     "& .MuiInputBase-input.Mui-disabled": {
-      color: "#5E5B50",
+      color: theme.palette.text.primary,
     },
     "& .MuiInput-underline:before": {
-      borderBottom: `1px dotted #5E5B50`,
+      borderBottom: `1px dotted ${theme.palette.text.disabled || theme.palette.divider}`,
     },
   },
 }));
@@ -155,7 +159,7 @@ class openIMISDatePicker extends Component {
       return (
         <StyledDatePicker>
           <FormControl fullWidth={fullWidth}>
-            <label className="label">
+            <label>
               {!!label ? formatMessage(intl, module, label).concat(required ? " *" : "") : null}
             </label>
             <DatePicker
@@ -190,9 +194,6 @@ class openIMISDatePicker extends Component {
                 "disabledStateVisibilityBoost": this.disabledVisibilityBoost && readOnly,
               })}
               value={this.state.value}
-              InputLabelProps={{
-                className: "label",
-              }}
               label={!!label ? formatMessage(intl, module, label).concat(required ? " *" : "") : null}
               onChange={this.dateChange}
               disablePast={disablePast}

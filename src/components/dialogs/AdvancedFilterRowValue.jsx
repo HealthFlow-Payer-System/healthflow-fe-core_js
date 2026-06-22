@@ -20,7 +20,7 @@ import {
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   '& .item': theme.paper?.item ?? {},
-  backgroundColor: theme.paper?.paper?.backgroundColor ?? "#dbeef0",
+  backgroundColor: theme.paper?.paper?.backgroundColor ?? theme.palette.background.default,
   '& .removeIcon': {
     transform: 'translate(-50%, -50%)',
     fontSize: '16px',
@@ -28,7 +28,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
     cursor: 'pointer',
   },
   '& .removeIconContainer': {
-    backgroundColor: theme.paper?.paper?.backgroundColor ?? "#dbeef0",
+    backgroundColor: theme.paper?.paper?.backgroundColor ?? theme.palette.background.default,
     width: '25px',
     height: '25px',
     marginTop: '25px',

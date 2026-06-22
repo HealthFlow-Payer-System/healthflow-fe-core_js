@@ -23,9 +23,6 @@ const StyledAutoSuggestion = styled("div")(({ theme }) => ({
     backgroundColor: theme.palette.grey[100],
     padding: theme.spacing(1),
   },
-  "& .label": {
-    color: theme.palette.primary.main,
-  },
   "& .textField": {
     width: "100%",
     minWidth: "120px",
@@ -194,10 +191,7 @@ class AutoSuggestion extends Component {
           {...inputProps}
           variant={this.inputVariant}
           label={label}
-          InputLabelProps={{
-            ...inputProps.InputLabelProps,
-            className: "label",
-          }}
+          InputLabelProps={inputProps.InputLabelProps}
           inputRef={inputRef}
           InputProps={{
             ...inputProps.InputProps,
