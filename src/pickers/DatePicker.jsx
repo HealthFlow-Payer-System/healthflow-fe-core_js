@@ -139,6 +139,7 @@ class openIMISDatePicker extends Component {
       module,
       label,
       readOnly = false,
+      disabled = false,
       required = false,
       fullWidth = true,
       format = "DD-MM-YYYY",
@@ -150,6 +151,12 @@ class openIMISDatePicker extends Component {
       inputVariant,
       ...otherProps
     } = this.props;
+
+    const toBool = (v) => {
+      if (v === false || v === "false" || v === 0 || v === "0" || v == null || v === "") return false;
+      return !!v;
+    };
+    const isDisabled = toBool(readOnly) || toBool(disabled);
 
     if (isSecondaryCalendarEnabled) {
       const secondCalendarFormatting = modulesManager.getConf("fe-core", "secondCalendarFormatting", format);
@@ -164,7 +171,7 @@ class openIMISDatePicker extends Component {
             </label>
             <DatePicker
               format={secondCalendarFormatting}
-              disabled={readOnly}
+              disabled={isDisabled}
               value={this.state.value ? this.moveByOneDay(new Date(this.state.value)) : null}
               {...((!!minDate || disablePast) && this.setMinDate())}
               {...(!!maxDate && { maxDate: this.moveByOneDay(new Date(maxDate)) })}
@@ -189,9 +196,9 @@ class openIMISDatePicker extends Component {
               maxDate={maxDate ? dayjs(maxDate) : undefined}
               minDate={minDate ? dayjs(minDate) : undefined}
               format={format}
-              disabled={readOnly}
+              disabled={isDisabled}
               className={clsx({
-                "disabledStateVisibilityBoost": this.disabledVisibilityBoost && readOnly,
+                "disabledStateVisibilityBoost": this.disabledVisibilityBoost && isDisabled,
               })}
               value={this.state.value}
               label={!!label ? formatMessage(intl, module, label).concat(required ? " *" : "") : null}

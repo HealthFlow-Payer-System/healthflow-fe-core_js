@@ -128,6 +128,22 @@ class Picker extends Component {
 
   renderIcon() {
     const { IconRender, title } = this.props;
+    if (React.isValidElement(IconRender)) {
+      const elType = IconRender.type;
+      const typeName = (typeof elType === "string" ? elType : elType && (elType.displayName || elType.name)) || "";
+      if (/button/i.test(typeName)) {
+        return React.cloneElement(IconRender, { title, onClick: this.onClick });
+      }
+      return (
+        <IconButton title={title} onClick={this.onClick}>
+          {IconRender}
+        </IconButton>
+      );
+    }
+    const compName = (IconRender && (IconRender.displayName || IconRender.name)) || "";
+    if (/button/i.test(compName)) {
+      return <IconRender title={title} onClick={this.onClick} />;
+    }
     return (
       <IconButton title={title} onClick={this.onClick}>
         <IconRender />
