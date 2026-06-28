@@ -294,6 +294,7 @@ class Searcher extends Component {
     super(props);
     this.miniFilterPane = props.modulesManager.getConf("fe-core", "miniFilterPane", false);
     this.fetchEnabled = props.modulesManager.getConf("fe-core", "shouldFetchInitially", true);
+    this.searchOnResetFilters = props.modulesManager.getConf("fe-core", "shouldSearchOnResetFilters", true);
   }
   componentDidMount() {
     document.addEventListener("keypress", this.handleEnter);
@@ -357,7 +358,7 @@ class Searcher extends Component {
         filters: { ...this.props.defaultFilters },
         orderBy: props.defaultOrderBy,
       }),
-      (e) => this.applyFilters(),
+      (e) => !this.searchOnResetFilters ? null : this.applyFilters(),
     );
   };
 
