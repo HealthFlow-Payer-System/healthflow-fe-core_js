@@ -168,7 +168,8 @@ class Table extends Component {
       fetching = null,
       error = null,
       subServicesItemsFormattersReview,
-      subServiceHeaders
+      subServiceHeaders,
+      extendHeader
     } = this.props;
     let localHeaders = [...(headers || [])];
     let localSubServiceHeaders = [...(subServiceHeaders || [])];
@@ -202,10 +203,22 @@ class Table extends Component {
       <StyledTableServiceReview>
         <Box position="relative" overflow="auto">
           {header && (
-            <Fragment>
-              <Typography className="tableTitle">{header}</Typography>
-              <Divider />
-            </Fragment>
+            <Grid container alignItems="center" justifyContent="space-between" className="tableTitle">
+              {extendHeader ? (
+                <>
+                  <Grid size={6}>
+                    <Typography variant="h6">{header}</Typography>
+                  </Grid>
+                  <Grid container direction="row" alignItems="center" justifyContent="space-between" size={6}>
+                    {extendHeader && extendHeader()}
+                  </Grid>
+                </>
+              ) : (
+                <Grid size={12}>
+                  <Typography variant="h6">{header}</Typography>
+                </Grid>
+              )}
+            </Grid>
           )}
           <MUITable className="table" size={size}>
             {!!localPreHeaders && localPreHeaders.length > 0 && (
