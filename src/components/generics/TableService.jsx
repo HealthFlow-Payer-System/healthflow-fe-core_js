@@ -219,7 +219,6 @@ class Table extends Component {
       error = null,
       forReview,
       subServicesItemsFormatters,
-      subServicesItemsFormattersReview,
       subServiceHeaders,
     } = this.props;
     let localHeaders = [...(headers || [])];
@@ -227,7 +226,6 @@ class Table extends Component {
     let localPreHeaders = !!preHeaders ? [...preHeaders] : null;
     let localItemFormatters = [...itemFormatters];
     let localSubServicesItemsFormatters = [...(subServicesItemsFormatters || [])];
-    let localsubServicesItemsFormattersReview = [...(subServicesItemsFormattersReview || [])];
     var i = !!headers && headers.length;
     var localForReview = forReview;
     while (localHeaders && i--) {
@@ -285,9 +283,6 @@ class Table extends Component {
               {items &&
                 items.length > 0 &&
                 items.map((i, iidx) => {
-                  const activeSubFormatters = forReview
-                    ? localsubServicesItemsFormattersReview
-                    : localSubServicesItemsFormatters;
                   const showSubServices = this.shouldShowSubServices(i, iidx, localItemFormatters);
 
                   if (i.claimlinkedService != undefined) {
@@ -331,7 +326,7 @@ class Table extends Component {
                                 </TableCell>
                               ))}
                             </TableRow>
-                            {this.renderSubServiceRows(i, iidx, activeSubFormatters)}
+                            {this.renderSubServiceRows(i, iidx, localSubServicesItemsFormatters)}
                           </Fragment>
                         )}
                       </Fragment>
@@ -364,16 +359,19 @@ class Table extends Component {
                         )}
                       </TableRow>
                       {showSubServices && (
-                        <Fragment>
-                          <TableRow>
-                            {localSubServiceHeaders.map((h, idx) => (
-                              <TableCell key={`sub-header-${iidx}-${idx}`} className="tableHeader">
-                                <FormattedMessage module={module} id={h} />
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                          {this.renderSubServiceRows(i, iidx, activeSubFormatters)}
-                        </Fragment>
+                        <TableRow>
+                          <TableCell colSpan={cleanedHeaders.length || 1}>
+                              <TableRow>
+                                {localSubServiceHeaders.map((h, idx) => (
+                                  <TableCell 
+                                  key={`sub-header-${iidx}-${idx}`} className="tableHeader">
+                                    <FormattedMessage module={module} id={h} />
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            {this.renderSubServiceRows(i, iidx, localSubServicesItemsFormatters)}
+                          </TableCell>
+                        </TableRow>
                       )}
                     </Fragment>
                   );
