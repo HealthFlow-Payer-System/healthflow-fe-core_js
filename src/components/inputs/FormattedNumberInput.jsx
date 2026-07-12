@@ -52,7 +52,7 @@ class FormattedNumberInput extends Component {
     this.setState({ rawValue: raw });
 
     const value = this.parseRawValue(raw);
-    this.props.onChange(isNaN(value) ? undefined : value);
+    this.props.onChange(isNaN(value) ? null : value);
   };
 
   formatInput = (value, displayZero, displayNa, decimal) => {
@@ -80,7 +80,7 @@ class FormattedNumberInput extends Component {
 
   handleNaBlur = () => {
     if ((isNaN(this.props.value) || this.props.value === "") && this.state.isEdited) {
-      this.props.onChange(undefined);
+      this.props.onChange(null);
     }
     this.setState({ isEdited: false });
   };
