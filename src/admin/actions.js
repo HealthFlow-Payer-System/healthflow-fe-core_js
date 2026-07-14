@@ -13,7 +13,6 @@ import { mapUserValuesToInput } from "./utils";
 const USER_SUMMARY_PROJECTION_BASE = [
   "id",
   "username",
-  "userTypes",
   "officer{id,dob,phone,lastName,otherNames,email}",
   "iUser{id,phone,lastName,otherNames,email,roles{id,name}}",
   "clientMutationId",

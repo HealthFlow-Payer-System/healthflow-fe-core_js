@@ -8,7 +8,7 @@ import withModulesManager, { ModulesManagerProvider } from "../helpers/modules";
 import Helmet from "../helpers/Helmet";
 import RequireAuth from "./RequireAuth";
 import FatalErrorPage from "./generics/FatalError";
-import { clearConfirm, toggleCurrentCalendarType } from "../actions";
+import { clearConfirm, toggleCurrentCalendarType, fetchMaxLengthConstraints } from "../actions";
 import AlertDialog from "./dialogs/AlertDialog";
 import ConfirmDialog from "./dialogs/ConfirmDialog";
 import { bindActionCreators } from "redux";
@@ -125,6 +125,7 @@ const App = (props) => {
         location.replace(basename);
       }
     }
+    dispatch(fetchMaxLengthConstraints());
   }, []);
 
   useEffect(() => {

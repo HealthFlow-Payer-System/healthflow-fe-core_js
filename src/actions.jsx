@@ -88,6 +88,15 @@ export function journalize(mutation, meta) {
   };
 }
 
+export function fetchMaxLengthConstraints() {
+  const payload = formatQuery("maxLengthConstraints", {}, ["constraints"]);
+  return graphql(payload, "FETCH_MAX_LENGTH_CONSTRAINTS");
+}
+
+function isCsrfError(error) {
+  return error?.message?.includes("CSRF token missing or incorrect.");
+}
+
 export function graphql(payload, type = "GRAPHQL_QUERY", params = {}) {
   let req = type + "_REQ";
   let resp = type + "_RESP";

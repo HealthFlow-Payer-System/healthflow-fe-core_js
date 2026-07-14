@@ -153,6 +153,7 @@ const UserMasterPanel = (props) => {
       <TextInput
         module="admin"
         label="user.lastName"
+        maxLengthKey="admin.user.lastName"
         required
         readOnly={readOnly}
         value={edited?.lastName ?? ""}
@@ -166,6 +167,7 @@ const UserMasterPanel = (props) => {
       <TextInput
         module="admin"
         label="user.givenNames"
+        maxLengthKey="admin.user.otherNames"
         required
         readOnly={readOnly}
         value={edited?.otherNames ?? ""}
@@ -188,6 +190,7 @@ const UserMasterPanel = (props) => {
           setValidAction={setUsernameValid}
           module="admin"
           label="user.username"
+          maxLengthKey="admin.user.username"
           codeTakenLabel="user.usernameAlreadyTaken"
           required={true}
           value={edited?.username ?? ""}
@@ -227,6 +230,7 @@ const UserMasterPanel = (props) => {
             readOnly={readOnly}
             module="admin"
             label="user.email"
+            maxLengthKey="admin.user.email"
             type="email"
             codeTakenLabel="user.emailAlreadyTaken"
             required={true}
@@ -244,6 +248,7 @@ const UserMasterPanel = (props) => {
             module="admin"
             type="phone"
             label="user.phone"
+            maxLengthKey="admin.user.phone"
             required={
               obligatoryUserFields?.phone == "M" ||
               (edited.userTypes?.includes(ENROLMENT_OFFICER_USER_TYPE) && obligatoryEOFields?.phone == "M")
