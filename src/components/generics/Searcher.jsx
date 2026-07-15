@@ -21,7 +21,7 @@ import GetIconComponent from "../../helpers/icons";
 const MoreHoriz = GetIconComponent("MoreHoriz");
 
 import { cacheFilters, resetCacheFilters, saveCurrentPaginationPage } from "../../actions";
-import { DEFAULT, ENTER_KEY } from "../../constants";
+import { DEFAULT, ENTER_KEY, ROWS_PER_PAGE_OPTIONS } from "../../constants";
 import { formatSorter, sort } from "../../helpers/api";
 import { formatMessage } from "../../helpers/i18n";
 import withModulesManager from "../../helpers/modules";
@@ -280,11 +280,22 @@ class SelectionMenu extends Component {
 const StyledSelectionMenu = injectIntl(withModulesManager(SelectionMenu));
 
 class Searcher extends Component {
+  resolveInitialPageSize = (props = this.props) => {
+    const userDefaultRowsPerPage = props?.user?.i_user?.default_rows_per_page;
+    if (ROWS_PER_PAGE_OPTIONS.includes(userDefaultRowsPerPage)) {
+      return userDefaultRowsPerPage;
+    }
+    if (ROWS_PER_PAGE_OPTIONS.includes(props.defaultPageSize)) {
+      return props.defaultPageSize;
+    }
+    return 10;
+  };
+
   state = {
     filters: {},
     orderBy: null,
     page: 0,
-    pageSize: this.props.defaultPageSize || 10,
+    pageSize: this.resolveInitialPageSize(),
     afterCursor: null,
     beforeCursor: null,
     selection: [],
@@ -305,7 +316,7 @@ class Searcher extends Component {
     this.setState(
       (state, props) => ({
         filters,
-        pageSize: props.defaultPageSize || 10,
+        pageSize: this.resolveInitialPageSize(props),
         orderBy: props.defaultOrderBy,
       }),
       (e) => {
@@ -738,6 +749,7 @@ class Searcher extends Component {
 
 const mapStateToProps = (state) => ({
   filtersCache: !!state.core && state.core.filtersCache,
+  user: state.core?.user,
   paginationPage: state.core?.savedPagination?.paginationPage,
   afterCursor: state.core?.savedPagination?.afterCursor,
   beforeCursor: state.core?.savedPagination?.beforeCursor,

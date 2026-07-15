@@ -401,6 +401,35 @@ export function loadUser() {
   });
 }
 
+export function saveCurrentUserDefaultRowsPerPage(defaultRowsPerPage, clientMutationLabel = null) {
+  return async (dispatch) => {
+    try {
+      const mutationResult = await dispatch(
+        graphqlMutation(
+          `
+            mutation ($input: ChangeUserDefaultRowsPerPageMutationInput!) {
+              changeUserDefaultRowsPerPage(input: $input) {
+                internalId
+                clientMutationId
+              }
+            }
+          `,
+          { input: { defaultRowsPerPage, clientMutationLabel } },
+          "PROFILE_DEFAULT_ROWS_PER_PAGE_MUTATION",
+          {},
+        ),
+      );
+      if (!mutationResult || mutationResult?.error) return mutationResult;
+      return dispatch(loadUser());
+    } catch (e) {
+      return { 
+        error: true, 
+        message: e?.message || 'An unexpected error occurred'
+      };
+    }
+  };
+}
+
 export function login(credentials) {
   return async (dispatch) => {
     if (credentials) {
