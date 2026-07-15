@@ -38,6 +38,7 @@ const ValidatedTextInput = ({
   value,
   invalidValueFormatLabel,
   invalidValueFormat,
+  maxLengthKey,
 }) => {
   const modulesManager = useModulesManager();
 
@@ -84,6 +85,7 @@ const ValidatedTextInput = ({
           error={error}
           value={value}
           inputProps={inputProps}
+          maxLengthKey={maxLengthKey}
           endAdornment={
             <InputAdornment position="end" component={!error ? ValidIcon : InvalidIcon}>
               <>
@@ -111,6 +113,7 @@ const ValidatedTextInput = ({
           type={type}
           onChange={debounce(onChange, DEFAULT_DEBOUNCE_TIME)}
           inputProps={inputProps}
+          maxLengthKey={maxLengthKey}
           endAdornment={
             <InputAdornment position="end" component={!error ? ValidIcon : InvalidIcon}>
               <>
