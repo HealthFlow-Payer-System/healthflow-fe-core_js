@@ -93,7 +93,7 @@ const Autocomplete = (props) => {
           onClick={() => setOpen(false)}
           sx={{ borderTop: "1px solid", borderColor: "divider" }}
         >
-          {formatMessage("confirm")}
+          {formatMessage("core.confirmSelect")}
         </Button>
       )}
     </Paper>
