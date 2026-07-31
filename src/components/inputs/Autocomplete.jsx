@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAutocomplete from "@mui/material/Autocomplete";
-import { TextField, Paper, Button, Chip } from "@mui/material";
+import { TextField, Paper, Button } from "@mui/material";
 import { useDebounceCb } from "../../helpers/hooks";
 import { useTranslations } from "../../helpers/i18n";
 import { useModulesManager } from "../../helpers/modules";
@@ -24,6 +24,24 @@ const StyledAutocomplete = styled("div")(({ theme }) => ({
 }));
 
 const defaultGetOptionSelected = (option, v) => option.id === v?.id;
+
+const PaperWithConfirm = ({ multiple, onConfirm, confirmLabel, ...paperProps }) => (
+  <Paper {...paperProps}>
+    {paperProps.children}
+    {multiple && (
+      <Button
+        fullWidth
+        size="small"
+        variant="text"
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={onConfirm}
+        sx={{ borderTop: "1px solid", borderColor: "divider" }}
+      >
+        {confirmLabel}
+      </Button>
+    )}
+  </Paper>
+);
 
 const Autocomplete = (props) => {
   const {
@@ -81,24 +99,6 @@ const Autocomplete = (props) => {
     setResetKey(Date.now());
   }, [value]);
 
-  const PaperWithConfirm = (paperProps) => (
-    <Paper {...paperProps}>
-      {paperProps.children}
-      {multiple && (
-        <Button
-          fullWidth
-          size="small"
-          variant="text"
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={() => setOpen(false)}
-          sx={{ borderTop: "1px solid", borderColor: "divider" }}
-        >
-          {formatMessage("core.confirmSelect")}
-        </Button>
-      )}
-    </Paper>
-  );
-
   const hasValue = multiple ? value?.length > 0 : !!value;
 
   return (
@@ -132,7 +132,14 @@ const Autocomplete = (props) => {
         filterOptions={filterOptions}
         filterSelectedOptions={filterSelectedOptions}
         onInputChange={(__, query) => handleInputChange(query)}
-        PaperComponent={PaperWithConfirm}
+        PaperComponent={(paperProps) => (
+          <PaperWithConfirm
+            {...paperProps}
+            multiple={multiple}
+            onConfirm={() => setOpen(false)}
+            confirmLabel={formatMessage("core.confirmSelect")}
+          />
+        )}
         renderInput={
           !!renderInput
             ? renderInput
