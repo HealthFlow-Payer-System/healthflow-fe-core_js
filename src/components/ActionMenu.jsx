@@ -44,8 +44,8 @@ const ActionMenu = ({ actions }) => {
                     },
                 }}
             >
-                {actions.map((action, index) => (
-                    <React.Fragment key={index}>
+                {actions.map((action) => (
+                    <React.Fragment key={action.label}>
                         {action.divider && <Divider />}
 
                         <Tooltip title={action.tooltip}>
