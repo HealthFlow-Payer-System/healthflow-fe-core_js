@@ -267,7 +267,7 @@ class UserFilter extends Component {
                   <PublishedComponent
                     pubRef="location.HealthFacilityPicker"
                     withNull={true}
-                    value={this.filterValue("healthFacilityId") || ""}
+                    value={this.filterValue("healthFacility") || ""}
                     district={selectedDistrict}
                     onChange={(v) => {
                       onChangeFilters([
