@@ -73,6 +73,7 @@ const App = (props) => {
     localesManager,
     modulesManager,
     basename = process.env.PUBLIC_URL,
+    applicationName = "HealthFlow Payer",
     toggleCurrentCalendarType,
     rights,
     ...others
@@ -168,7 +169,7 @@ const App = (props) => {
   if (!auth.isInitialized) return null;
   return (
     <StyledApp>
-      <Helmet titleTemplate="%s - openIMIS" defaultTitle="openIMIS" />
+      <Helmet titleTemplate={`%s - ${applicationName}`} defaultTitle={applicationName} />
       <CssBaseline />
       <ModulesManagerProvider value={modulesManager}>
         <PublicPageLanguageProvider>
