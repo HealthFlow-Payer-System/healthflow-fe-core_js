@@ -444,6 +444,7 @@ export function login(credentials) {
     if (credentials) {
       const mutation = `mutation authenticate($username: String!, $password: String!) {
             tokenAuth(username: $username, password: $password) {
+              token
               refreshExpiresIn
             }
           }`;
