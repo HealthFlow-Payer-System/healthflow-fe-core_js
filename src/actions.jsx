@@ -533,7 +533,7 @@ export function fetchCsrfToken(jwtToken) {
         {},
         false,
         {
-          "Authorization": `JWT ${jwtToken}`,
+          "Authorization": `Bearer ${jwtToken}`,
         },
       ),
     );
